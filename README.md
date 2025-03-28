@@ -1,5 +1,4 @@
-
-Automation - Dynamic P2 LED Matrix Display 🌟"
+Dynamic P2 LED Matrix Display 🌟"
 
 Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sensor data, time, and date with effortless elegance. Powered by WLEDMM, this automation ensures your display stays fresh, updating at your chosen interval or whenever your sensors change.
 
@@ -34,13 +33,14 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
   The display will now show:
   - [Color Rings] Four edge indicators showing device states
   - [Top] Your sensor values (e.g., 23°C | 45% humidity)
-  - [Center] Animation of Photo :) use PixArt to send Images pixart.htm https://kno.wled.ge/features/pixel-art-converter/
+  - [Center] Animation of Photo :) 
   - [Bottom] Current time (14:30) and date (28/06)
 
 🔧 Pro Tips:
   - Ensure your P2 panel runs WLEDMM and is reachable at the configured IP.
   - Use darker RGB values (0,145,0) for better LED visibility.
   - Top position is ideal for most important status alerts.
+  - Use PixArt to send Images to Segment 4 https://kno.wled.ge/features/pixel-art-converter/
 
 🖥️ Visual Layout:
                      [🟢TOP]    
