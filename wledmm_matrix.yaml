@@ -44,6 +44,7 @@ blueprint:
     - Top position is ideal for most important status alerts.
     - Use PixArt to send Images to Segment 4 https://kno.wled.ge/features/pixel-art-converter/
 
+
     🖥️ Visual Layout:
                      [🟢TOP]    
                [23°C]       [45%]
@@ -53,7 +54,6 @@ blueprint:
 
     - Made by Einstein aka PD2EMC for Playreal
     - Just for fun :)
-
     
   domain: automation
 
@@ -69,6 +69,190 @@ blueprint:
         text:
         # entity:
         #   domain: sensor
+
+  
+    sensor_top_left:
+      name: "Top Left Segment"
+      icon: mdi:thermometer
+      description: "Configure the top-left sensor display."
+      collapsed: true
+      input:
+        sensor_1:
+          name: "Top Left Sensor"
+          description: "Select a sensor for this segment."
+          default: "sensor.buienradar_temperature"
+          selector:
+            entity:
+              domain: sensor
+        sensor_1_add:
+          name: "Top Left Unit Label"
+          description: "Text to append (e.g., °C/°F or %)."
+          default: "C"
+          selector:
+            text:
+        sensor_1_color:
+          name: "Top Left Display Color"
+          description: "Color for this segment's text."
+          default: [0, 145, 0]
+          selector:
+            color_rgb: {}
+
+    sensor_top_right:
+      name: "Top Right Segment"
+      icon: mdi:water-percent
+      description: "Configure the top-right sensor display."
+      collapsed: true
+      input:
+        sensor_2:
+          name: "Top Right Sensor"
+          description: "Select a sensor for this segment."
+          default: "sensor.buienradar_humidity"
+          selector:
+            entity:
+              domain: sensor
+        sensor_2_add:
+          name: "Top Right Unit Label"
+          description: "Text to append (e.g., °C/°F or %)."
+          default: "%"
+          selector:
+            text:
+        sensor_2_color:
+          name: "Top Right Display Color"
+          description: "Color for this segment's text."
+          default: [0, 145, 0]
+          selector:
+            color_rgb: {}
+
+
+    sensor_rows:
+      name: "Color Rings Sensors"
+      icon: mdi:led-strip
+      description: "Set Sensors for Color Rings & Colors"
+      collapsed: true
+      input:
+        top_row:
+          name: "Top Row Sensor"
+          description: "Select any binary_sensor (on/off)"
+          default: "binary_sensor.techinc_spacestate"
+          selector:
+            entity:
+              domain: 
+                - switch
+                - binary_sensor
+
+        bottom_row:
+          name: "Bottom Row Sensor"
+          description: "Select any binary_sensor (on/off)"
+          default: "binary_sensor.techinc_spacestate"
+          selector:
+            entity:
+              domain: 
+                - switch
+                - binary_sensor
+
+        left_row:
+          name: "Left Row Sensor"
+          description: "Select any binary_sensor (on/off)"
+          default: "binary_sensor.techinc_spacestate"
+          selector:
+            entity:
+              domain: 
+                - switch
+                - binary_sensor
+        right_row:
+          name: "Right Row Sensor"
+          description: "Select any binary_sensor (on/off)"
+          default: "binary_sensor.techinc_spacestate"
+          selector:
+            entity:
+              domain: 
+                - switch
+                - binary_sensor
+
+        color_on:
+          name: "Color for ON/OPEN state"
+          description: "Select color to use when device is ON/OPEN"
+          default: [0, 145, 0]  # Dark green
+          selector:
+            color_rgb: {}
+
+        color_off:
+          name: "Color for OFF/CLOSED state"
+          description: "Select color to use when device is OFF/CLOSED"
+          default: [145, 0, 0]  # Dark red
+          selector:
+            color_rgb: {}
+
+        color_other:
+          name: "Color for other/unknown state"
+          description: "Select color to use for other states"
+          default: [0, 0, 145]  # Dark blue
+          selector:
+            color_rgb: {}
+
+
+
+
+
+    localization:
+      name: Localization (optional)
+      icon: mdi:earth
+      description: Select the language and date/time formats to be displayed in your panel.
+      collapsed: true
+      input:
+        date_format:
+          name: Date Format
+          description: "Select the format for date to display."
+          default: '%d/%m'
+          selector:
+            select:
+              multiple: false
+              custom_value: true
+              options:
+                - label: 'DD/MM (ex."22/03")'
+                  value: '%d/%m'
+                - label: 'D/M (ex."22/3")'
+                  value: '%-d/%-m'
+                - label: 'M/D (ex."3/22")'
+                  value: '%-m/%-d'
+                - label: 'D.M (ex."22.3")'
+                  value: '%-d.%-m'
+                - label: 'DD.MM (ex."22.03")'
+                  value: '%d.%m'
+                - label: 'D-M (ex."22-3")'
+                  value: '%-d-%-m'
+                - label: 'M-D (ex."3-22")'
+                  value: '%-m-%-d'
+        time_format:
+          name: Time Format
+          description: "Choose how time should be displayed."
+          default: '%H:%M'
+          selector:
+            select:
+              multiple: false
+              custom_value: true
+              options:
+                - label: 'HH:MM (ex. 08:30 and 20:30)'
+                  value: '%H:%M'
+                - label: 'H:MM 24H (ex. 8:30 and 20:30)'
+                  value: '%-H:%M'
+                - label: 'H:MM AM/PM (ex. 8:30AM and 8:30PM)'
+                  value: '%-I:%M %p'
+
+  
+  
+    # matrix_ip:
+    #   name: IP of Matrix
+    #   description: "Set ip address of Matrix."
+    #   default: "192.168.2.231" 
+    #   #"http://192.168.2.231/json/state" 
+    #   #"192.168.2.231"
+    #   selector:
+    #     text:
+    #     # entity:
+    #     #   domain: sensor
+        
+        
     # update_interval:
     #   name: Update Interval (X Minute)
     #   description: "Update Display on every X Minute."
@@ -76,94 +260,106 @@ blueprint:
     #   selector:
     #     text:
 
-    sensor_1:
-      name: Sensor for Top Left Segment
-      description: "Select a sensor for Segment 1 (e.g., sensor.buienradar_temperature)."
-      default: "sensor.buienradar_temperature"
-      selector:
-        entity:
-          domain: sensor
-    sensor_1_add:
-      name: Sensor 1 Addition
-      description: "Sensor 2 Addition (e.g. C/F)."
-      default: "C" 
-      selector:
-        text:
+    # sensor_1:
+    #   name:  Top Left Segment Sensor
+    #   description: "Select a sensor for Segment 1 (e.g., sensor.buienradar_temperature)."
+    #   default: "sensor.buienradar_temperature"
+    #   selector:
+    #     entity:
+    #       domain: sensor
+    # sensor_1_add:
+    #   name: Top Left Segment Addition
+    #   description: "Sensor 2 Addition (e.g. C/F)."
+    #   default: "C" 
+    #   selector:
+    #     text:
+    # sensor_1_color:
+    #   name:  Top Left Segment Color
+    #   description: "Select color to use when device is ON/OPEN"
+    #   default: [0, 145, 0]  # Dark green
+    #   selector:
+    #     color_rgb: {}
 
-    sensor_2:
-      name: Sensor for Top Right Segment
-      description: "Select a sensor for Segment 3 (e.g., sensor.buienradar_humidity)."
-      default: "sensor.buienradar_humidity"
-      selector:
-        entity:
-          domain: sensor
-    sensor_2_add:
-      name: Sensor 2 Addition
-      description: "Sensor 2 Addition (e.g. %)."
-      default: "%" 
-      selector:
-        text:
+    # sensor_2:
+    #   name: Top Right Segment Sensor
+    #   description: "Select a sensor for Segment 3 (e.g., sensor.buienradar_humidity)."
+    #   default: "sensor.buienradar_humidity"
+    #   selector:
+    #     entity:
+    #       domain: sensor
+    # sensor_2_add:
+    #   name: Top Right Segment Addition
+    #   description: "Sensor 2 Addition (e.g. %)."
+    #   default: "%" 
+    #   selector:
+    #     text:
+    # sensor_2_color:
+    #   name:  Top Right Segment Color
+    #   description: "Select color to use when device is ON/OPEN"
+    #   default: [0, 145, 0]  # Dark green
+    #   selector:
+    #     color_rgb: {}
 
-    top_row:
-      name: "Status Sensor for Top Row"
-      description: "Select any binary_sensor (on/off)"
-      default: "binary_sensor.techinc_spacestate"
-      selector:
-        entity:
-          domain: 
-            - switch
-            - binary_sensor
+    # top_row:
+    #   name: "Status Sensor for Top Row"
+    #   description: "Select any binary_sensor (on/off)"
+    #   default: "binary_sensor.techinc_spacestate"
+    #   selector:
+    #     entity:
+    #       domain: 
+    #         - switch
+    #         - binary_sensor
 
-    right_row:
-      name: "Status Sensor for Right Row"
-      description: "Select any binary_sensor (on/off)"
-      default: "binary_sensor.techinc_spacestate"
-      selector:
-        entity:
-          domain: 
-            - switch
-            - binary_sensor
+    # right_row:
+    #   name: "Status Sensor for Right Row"
+    #   description: "Select any binary_sensor (on/off)"
+    #   default: "binary_sensor.techinc_spacestate"
+    #   selector:
+    #     entity:
+    #       domain: 
+    #         - switch
+    #         - binary_sensor
           
-    bottom_row:
-      name: "Status Sensor for Bottom Row"
-      description: "Select any binary_sensor (on/off)"
-      default: "binary_sensor.techinc_spacestate"
-      selector:
-        entity:
-          domain: 
-            - switch
-            - binary_sensor
+    # bottom_row:
+    #   name: "Status Sensor for Bottom Row"
+    #   description: "Select any binary_sensor (on/off)"
+    #   default: "binary_sensor.techinc_spacestate"
+    #   selector:
+    #     entity:
+    #       domain: 
+    #         - switch
+    #         - binary_sensor
     
-    left_row:
-      name: "Status Sensor for Left Row"
-      description: "Select any binary_sensor (on/off)"
-      default: "binary_sensor.techinc_spacestate"
-      selector:
-        entity:
-          domain: 
-            - switch
-            - binary_sensor
+    # left_row:
+    #   name: "Status Sensor for Left Row"
+    #   description: "Select any binary_sensor (on/off)"
+    #   default: "binary_sensor.techinc_spacestate"
+    #   selector:
+    #     entity:
+    #       domain: 
+    #         - switch
+    #         - binary_sensor
 
-    color_on:
-      name: "Color for ON/OPEN state"
-      description: "Select color to use when device is ON/OPEN"
-      default: [0, 145, 0]  # Dark green
-      selector:
-        color_rgb: {}
+    # color_on:
+    #   name: "Color for ON/OPEN state"
+    #   description: "Select color to use when device is ON/OPEN"
+    #   default: [0, 145, 0]  # Dark green
+    #   selector:
+    #     color_rgb: {}
 
-    color_off:
-      name: "Color for OFF/CLOSED state"
-      description: "Select color to use when device is OFF/CLOSED"
-      default: [145, 0, 0]  # Dark red
-      selector:
-        color_rgb: {}
+    # color_off:
+    #   name: "Color for OFF/CLOSED state"
+    #   description: "Select color to use when device is OFF/CLOSED"
+    #   default: [145, 0, 0]  # Dark red
+    #   selector:
+    #     color_rgb: {}
 
-    color_other:
-      name: "Color for other/unknown state"
-      description: "Select color to use for other states"
-      default: [0, 0, 145]  # Dark blue
-      selector:
-        color_rgb: {}
+    # color_other:
+    #   name: "Color for other/unknown state"
+    #   description: "Select color to use for other states"
+    #   default: [0, 0, 145]  # Dark blue
+    #   selector:
+    #     color_rgb: {}
         
     # # Color selectors for each state
     # color_on:
@@ -236,16 +432,25 @@ condition: []
 action:
   - variables:
       matrix_ip_entity: !input matrix_ip
+      matrix_url_value: "http://{{ matrix_ip_entity }}/json/state"
+      #
       sensor_1_entity: !input sensor_1
       sensor_1_addition: !input sensor_1_add
+      sensor_1_col: !input sensor_1_color
+      sensor_1_value: "{{ states(sensor_1_entity) | default('nan') }}{{sensor_1_addition}}"
+      #
       sensor_2_entity: !input sensor_2
       sensor_2_addition: !input sensor_2_add
-      
-      matrix_url_value: "http://{{ matrix_ip_entity }}/json/state"
-      sensor_1_value: "{{ states(sensor_1_entity) | default('nan') }}{{sensor_1_addition}}"
+      sensor_2_col: !input sensor_2_color
       sensor_2_value: "{{ states(sensor_2_entity) | default('nan') }}{{sensor_2_addition}}"
-      time_value: "{{ now().strftime('%H:%M') }}"
-      date_value: "{{ now().strftime('%d/%m') }}"
+      #
+      date_format_choice: !input date_format
+      date_value: "{{ now().strftime(date_format_choice) }}"
+      #date_value: "{{ now().strftime('%d/%m') }}"
+      
+      time_format_choice: !input time_format
+      time_value: "{{ now().strftime(time_format_choice) }}"
+      #time_value: "{{ now().strftime('%H:%M') }}"
 
       # Color variables
       color_on: !input color_on
