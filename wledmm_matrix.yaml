@@ -1,5 +1,5 @@
 blueprint:
-  name: "Automation - Dynamic P2 LED Matrix Display 🌟"
+  name: "WLEDMM P2 LED Matrix Display 🌟"
   description: |
     Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sensor data, time, and date with effortless elegance. Powered by WLEDMM, this automation ensures your display stays fresh, updating at your chosen interval or whenever your sensors change.
 
