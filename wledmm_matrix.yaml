@@ -42,6 +42,7 @@ blueprint:
     - Ensure your P2 panel runs WLEDMM and is reachable at the configured IP.
     - Use darker RGB values (0,145,0) for better LED visibility.
     - Top position is ideal for most important status alerts.
+    - Use PixArt to send Images to Segment 4 https://kno.wled.ge/features/pixel-art-converter/
 
     🖥️ Visual Layout:
                      [🟢TOP]    
