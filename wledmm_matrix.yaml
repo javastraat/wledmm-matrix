@@ -1,0 +1,453 @@
+blueprint:
+  name: "Automation - Dynamic P2 LED Matrix Display 🌟"
+  description: |
+    Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sensor data, time, and date with effortless elegance. Powered by WLEDMM, this automation ensures your display stays fresh, updating at your chosen interval or whenever your sensors change.
+
+    ✨ Features
+    ✅ Customizable Sensor Display: Show live data from any sensor (temperature, humidity, etc.) in beautifully formatted segments.
+    ✅ Time & Date: Always stay on schedule with a crisp, auto-updating clock and calendar.
+    ✅ Smart Updates: Refreshes automatically and triggers instantly when sensor values change.
+    ✅ Plug & Play: Minimal setup—just configure, deploy, and enjoy!
+    ✅ Color-Coded Status Rings: Four directional indicators that glow:
+       - 🟢 Green for ON/OPEN states
+       - 🔴 Red for OFF/CLOSED states
+       - 🔵 Blue for other/unknown states
+
+    ⚙️ Setup Guide
+    1️⃣ Add to configuration.yaml (Required once)
+
+    ```yaml
+    rest_command:
+      wledmm_matrix:
+        url: '{{ url }}'
+        method: POST
+        payload: '{{ payload }}'
+    ```
+
+    2️⃣ Configure Your Automation
+    - IP of Matrix: Enter your P2 LED panel's IP (e.g., 192.168.2.231).
+    - Main Sensors: Pick any sensor (e.g., sensor.buienradar_temperature for Segment 1).
+    - Status Rings: Assign binary sensors to four directional indicators (top/right/bottom/left).
+    - Custom Colors: Set colors for ON, OFF, and other states.
+
+
+    3️⃣ Watch It Shine! 🌈
+    The display will now show:
+    - [Color Rings] Four edge indicators showing device states
+    - [Top] Your sensor values (e.g., 23°C | 45% humidity)
+    - [Center] Animation of Photo :) use PixArt to send Images pixart.htm http://192.168.2.231/pixart.htm
+    - [Bottom] Current time (14:30) and date (28/06)
+
+    🔧 Pro Tips:
+    - Ensure your P2 panel runs WLEDMM and is reachable at the configured IP.
+    - Use darker RGB values (0,145,0) for better LED visibility.
+    - Top position is ideal for most important status alerts.
+
+    🖥️ Visual Layout:
+                     [🟢TOP]    
+               [23°C]       [45%]
+      [🟢LEFT] [Middle animation] [🔴RIGHT]
+               [14:30]     [28/06]
+                   [🔵BOTTOM]
+
+    
+  domain: automation
+
+  input:
+  
+    matrix_ip:
+      name: IP of Matrix
+      description: "Set ip address of Matrix."
+      default: "192.168.2.231" 
+      #"http://192.168.2.231/json/state" 
+      #"192.168.2.231"
+      selector:
+        text:
+        # entity:
+        #   domain: sensor
+    # update_interval:
+    #   name: Update Interval (X Minute)
+    #   description: "Update Display on every X Minute."
+    #   default: "*"
+    #   selector:
+    #     text:
+
+    sensor_1:
+      name: Sensor for Top Left Segment
+      description: "Select a sensor for Segment 1 (e.g., sensor.buienradar_temperature)."
+      default: "sensor.buienradar_temperature"
+      selector:
+        entity:
+          domain: sensor
+    sensor_1_add:
+      name: Sensor 1 Addition
+      description: "Sensor 2 Addition (e.g. C/F)."
+      default: "C" 
+      selector:
+        text:
+
+    sensor_2:
+      name: Sensor for Top Right Segment
+      description: "Select a sensor for Segment 3 (e.g., sensor.buienradar_humidity)."
+      default: "sensor.buienradar_humidity"
+      selector:
+        entity:
+          domain: sensor
+    sensor_2_add:
+      name: Sensor 2 Addition
+      description: "Sensor 2 Addition (e.g. %)."
+      default: "%" 
+      selector:
+        text:
+
+    top_row:
+      name: "Status Sensor for Top Row"
+      description: "Select any binary_sensor (on/off)"
+      default: "binary_sensor.techinc_spacestate"
+      selector:
+        entity:
+          domain: 
+            - switch
+            - binary_sensor
+
+    right_row:
+      name: "Status Sensor for Right Row"
+      description: "Select any binary_sensor (on/off)"
+      default: "binary_sensor.techinc_spacestate"
+      selector:
+        entity:
+          domain: 
+            - switch
+            - binary_sensor
+          
+    bottom_row:
+      name: "Status Sensor for Bottom Row"
+      description: "Select any binary_sensor (on/off)"
+      default: "binary_sensor.techinc_spacestate"
+      selector:
+        entity:
+          domain: 
+            - switch
+            - binary_sensor
+    
+    left_row:
+      name: "Status Sensor for Left Row"
+      description: "Select any binary_sensor (on/off)"
+      default: "binary_sensor.techinc_spacestate"
+      selector:
+        entity:
+          domain: 
+            - switch
+            - binary_sensor
+
+    color_on:
+      name: "Color for ON/OPEN state"
+      description: "Select color to use when device is ON/OPEN"
+      default: [0, 145, 0]  # Dark green
+      selector:
+        color_rgb: {}
+
+    color_off:
+      name: "Color for OFF/CLOSED state"
+      description: "Select color to use when device is OFF/CLOSED"
+      default: [145, 0, 0]  # Dark red
+      selector:
+        color_rgb: {}
+
+    color_other:
+      name: "Color for other/unknown state"
+      description: "Select color to use for other states"
+      default: [0, 0, 145]  # Dark blue
+      selector:
+        color_rgb: {}
+        
+    # # Color selectors for each state
+    # color_on:
+    #   name: "Color for ON/OPEN state"
+    #   description: "Select color to use when device is ON/OPEN"
+    #   default: "0,145,0"  # Dark green
+    #   selector:
+    #     text:
+
+    # color_off:
+    #   name: "Color for OFF/CLOSED state"
+    #   description: "Select color to use when device is OFF/CLOSED"
+    #   default: "145,0,0"  # Dark red
+    #   selector:
+    #     text:
+
+    # color_other:
+    #   name: "Color for other/unknown state"
+    #   description: "Select color to use for other states"
+    #   default: "0,0,145"  # Dark blue
+    #   selector:
+    #     text:
+
+    # service_1:
+    #   name: Service for Segment 1 (Temperature)
+    #   description: "Choose the service to display Temperature."
+    #   default: "rest_command.wled1_text"
+    #   selector:
+    #     text:
+
+    # service_2:
+    #   name: Service for Segment 2 (Humidity)
+    #   description: "Choose the service to display Humidity."
+    #   default: "rest_command.wled2_text"
+    #   selector:
+    #     text:
+
+    # service_3:
+    #   name: Service for Segment 3 (Time)
+    #   description: "Choose the service to display the time."
+    #   default: "rest_command.wled3_text"
+    #   selector:
+    #     text:
+
+    # service_4:
+    #   name: Service for Segment 4 (Date)
+    #   description: "Choose the service to display the date."
+    #   default: "rest_command.wled4_text"
+    #   selector:
+    #     text:
+
+trigger:
+  - trigger: time_pattern
+    minutes: "*" #!input update_interval
+  - platform: state
+    entity_id: !input sensor_1
+  - platform: state
+    entity_id: !input sensor_2
+  - platform: state
+    entity_id: !input top_row
+  - platform: state
+    entity_id: !input right_row
+  - platform: state
+    entity_id: !input bottom_row
+  - platform: state
+    entity_id: !input left_row
+
+condition: []
+
+action:
+  - variables:
+      matrix_ip_entity: !input matrix_ip
+      sensor_1_entity: !input sensor_1
+      sensor_1_addition: !input sensor_1_add
+      sensor_2_entity: !input sensor_2
+      sensor_2_addition: !input sensor_2_add
+      
+      matrix_url_value: "http://{{ matrix_ip_entity }}/json/state"
+      sensor_1_value: "{{ states(sensor_1_entity) | default('nan') }}{{sensor_1_addition}}"
+      sensor_2_value: "{{ states(sensor_2_entity) | default('nan') }}{{sensor_2_addition}}"
+      time_value: "{{ now().strftime('%H:%M') }}"
+      date_value: "{{ now().strftime('%d/%m') }}"
+
+      # Color variables
+      color_on: !input color_on
+      color_off: !input color_off
+      color_other: !input color_other
+      
+      # Convert color arrays to strings
+      color_on_str: "{{ color_on|join(',') }}"
+      color_off_str: "{{ color_off|join(',') }}"
+      color_other_str: "{{ color_other|join(',') }}"
+
+
+      # Reference all input entities first
+      top_entity: !input top_row
+      right_entity: !input right_row
+      bottom_entity: !input bottom_row
+      left_entity: !input left_row
+
+      # Top Row
+      top_row_color: >-
+        {% set s = states(top_entity) %}
+        {{ color_on_str if s in ['on','open'] else color_off_str if s in ['off','closed'] else color_other_str }}
+
+      # Right Row
+      right_row_color: >-
+        {% set s = states(right_entity) %}
+        {{ color_on_str if s in ['on','open'] else color_off_str if s in ['off','closed'] else color_other_str }}
+
+      # Bottom Row
+      bottom_row_color: >-
+        {% set s = states(bottom_entity) %}
+        {{ color_on_str if s in ['on','open'] else color_off_str if s in ['off','closed'] else color_other_str }}
+
+      # Left Row
+      left_row_color: >-
+        {% set s = states(left_entity) %}
+        {{ color_on_str if s in ['on','open'] else color_off_str if s in ['off','closed'] else color_other_str }}
+        
+    #   # Top Row
+    #   top_row_value: >-
+    #     {% set s = states(top_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   top_row_color: >-
+    #     {% set s = states(top_entity) %}
+    #     {{ color_on if s in ['on','open'] else color_off if s in ['off','closed'] else color_other }}
+
+    #   # Right Row
+    #   right_row_value: >-
+    #     {% set s = states(right_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   right_row_color: >-
+    #     {% set s = states(right_entity) %}
+    #     {{ color_on if s in ['on','open'] else color_off if s in ['off','closed'] else color_other }}
+
+    #   # Bottom Row
+    #   bottom_row_value: >-
+    #     {% set s = states(bottom_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   bottom_row_color: >-
+    #     {% set s = states(bottom_entity) %}
+    #     {{ color_on if s in ['on','open'] else color_off if s in ['off','closed'] else color_other }}
+
+    #   # Left Row
+    #   left_row_value: >-
+    #     {% set s = states(left_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   left_row_color: >-
+    #     {% set s = states(left_entity) %}
+    #     {{ color_on if s in ['on','open'] else color_off if s in ['off','closed'] else color_other }}
+        
+    #   # Top Row
+    #   top_row_value: >-
+    #     {% set s = states(top_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   top_row_color: >-
+    #     {% set s = states(top_entity) %}
+    #     {{ '0,145,0' if s in ['on','open'] else '145,0,0' if s in ['off','closed'] else '0,0,145' }}
+
+    #   # Right Row
+    #   right_row_value: >-
+    #     {% set s = states(right_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   right_row_color: >-
+    #     {% set s = states(right_entity) %}
+    #     {{ '0,145,0' if s in ['on','open'] else '145,0,0' if s in ['off','closed'] else '0,0,145' }}
+
+    #   # Bottom Row
+    #   bottom_row_value: >-
+    #     {% set s = states(bottom_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   bottom_row_color: >-
+    #     {% set s = states(bottom_entity) %}
+    #     {{ '0,145,0' if s in ['on','open'] else '145,0,0' if s in ['off','closed'] else '0,0,145' }}
+
+    #   # Left Row
+    #   left_row_value: >-
+    #     {% set s = states(left_entity) %}
+    #     {{ 'ON' if s in ['on','open'] else 'OFF' if s in ['off','closed'] else s|default('--') }}
+    #   left_row_color: >-
+    #     {% set s = states(left_entity) %}
+    #     {{ '0,145,0' if s in ['on','open'] else '145,0,0' if s in ['off','closed'] else '0,0,145' }}
+        
+        
+    #   top_row_value: >-
+    #     {% if is_state(input.top_row, 'on') %}0,145,0
+    #     {% elif is_state(input.top_row, 'off') %}145,0,0
+    #     {% elif is_state(input.top_row, 'open') %}0,145,0
+    #     {% elif is_state(input.top_row, 'closed') %}145,0,0
+    #     {% else %}{{ states(input.top_row) | default('0,0,145') }}{% endif %}
+
+    #   right_row_value: >-
+    #     {% if is_state(input.right_row, 'on') %}0,145,0
+    #     {% elif is_state(input.right_row, 'off') %}145,0,0
+    #     {% elif is_state(input.right_row, 'open') %}0,145,0
+    #     {% elif is_state(input.right_row, 'closed') %}145,0,0
+    #     {% else %}{{ states(input.right_row) | default('0,0,145') }}{% endif %}
+
+    #   bottom_row_value: >-
+    #     {% if is_state(input.bottom_row, 'on') %}0,145,0
+    #     {% elif is_state(input.bottom_row, 'off') %}145,0,0
+    #     {% elif is_state(input.bottom_row, 'open') %}0,145,0
+    #     {% elif is_state(input.bottom_row, 'closed') %}145,0,0
+    #     {% else %}{{ states(input.bottom_row) | default('0,0,145') }}{% endif %}
+
+    #   left_row_value: >-
+    #     {% if is_state(input.left_row, 'on') %}0,145,0
+    #     {% elif is_state(input.left_row, 'off') %}145,0,0
+    #     {% elif is_state(input.left_row, 'open') %}0,145,0
+    #     {% elif is_state(input.left_row, 'closed') %}145,0,0
+    #     {% else %}{{ states(input.left_row) | default('0,0,145') }}{% endif %}
+        
+    #         # { "id": 0, "n": "{{ top_row_value }}" },    # Top
+    #         # { "id": 1, "n": "{{ right_row_value }}" }, # Right 
+    #         # { "id": 2, "n": "{{ bottom_row_value }}" },# Bottom
+    #         # { "id": 3, "n": "{{ left_row_value }}" },  # Left   
+#color: 0,145,0
+#'{"seg": [
+#   {},
+#   {},
+#   {},
+#   {},
+#    {},
+    # {"col":[[{{color}}]]},
+    # {"col":[[{{color}}]]},
+    # {"col":[[{{color}}]]},
+    # {"col":[[{{color}}]]}
+#    ]
+#    }'
+#   - service: wledmm_matrix
+#     data:
+#       ip: ://192.168.2.231/json/state
+#       payload: '{"seg": [
+#         { "n": "{{sensor_1_value}}" },
+#         { "n": "{{sensor_2_value}}" },
+#         { "n": "{{time_value}}" },
+#         { "n": "{{date_value}}" },
+#         {},
+#         {}
+#         ]
+#         }'
+      
+#   - service: rest_command.wledmm_matrix_ok
+#     data:
+#       ip: !input matrix_ip
+#       payload: '{"seg": [
+#         { "n": "{{sensor_1_value}}" },
+#         { "n": "{{sensor_2_value}}" },
+#         { "n": "{{time_value}}" },
+#         { "n": "{{date_value}}" },
+#         {},
+#         {},
+#         {},
+#         {}
+#         ]
+#         }'
+
+  - service: rest_command.wledmm_matrix
+    data:
+      url: "{{ matrix_url_value }}"
+      payload: '{"seg": [
+        { "n": "{{sensor_1_value}}" },
+        { "n": "{{sensor_2_value}}" },
+        { "n": "{{time_value}}" },
+        { "n": "{{date_value}}" },
+        {},
+        {"col":[[{{top_row_color}}]]},
+        {"col":[[{{right_row_color}}]]},
+        {"col":[[{{left_row_color}}]]},
+        {"col":[[{{bottom_row_color}}]]}
+        ]
+        }'
+
+#   - service: !input service_1
+#     data:
+#       text1: "{{ sensor_1_value }}"
+
+#   - service: !input service_2
+#     data:
+#       text2: "{{ sensor_2_value }}"
+
+#   - service: !input service_3
+#     data:
+#       text3: "{{ time_value }}"
+
+#   - service: !input service_4
+#     data:
+#       text4: "{{ date_value }}"
+
+mode: single
