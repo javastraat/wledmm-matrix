@@ -53,5 +53,6 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
   - Made by Einstein aka PD2EMC for Playreal
   - Just for fun :)
 
+purchase site：https://www.aliexpress.com/item/1005007201147335.html
 
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fjavastraat%2Fwledmm-matrix%2Fblob%2Fmain%2Fwledmm_matrix.yaml)
