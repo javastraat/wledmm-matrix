@@ -93,7 +93,7 @@ blueprint:
         sensor_1_color:
           name: "Top Left Display Color"
           description: "Color for this segment's text."
-          default: [0, 145, 0]
+          default: [145, 145, 0]
           selector:
             color_rgb: {}
 
@@ -119,7 +119,7 @@ blueprint:
         sensor_2_color:
           name: "Top Right Display Color"
           description: "Color for this segment's text."
-          default: [0, 145, 0]
+          default: [180, 100, 0]
           selector:
             color_rgb: {}
 
@@ -195,7 +195,7 @@ blueprint:
 
 
     localization:
-      name: Localization (optional)
+      name: Date and Time Display
       icon: mdi:earth
       description: Select the language and date/time formats to be displayed in your panel.
       collapsed: true
@@ -223,6 +223,13 @@ blueprint:
                   value: '%-d-%-m'
                 - label: 'M-D (ex."3-22")'
                   value: '%-m-%-d'
+        date_color:
+          name: "Date Display Color"
+          description: "Color for this segment's text."
+          default: [145, 145, 145]
+          selector:
+            color_rgb: {}
+            
         time_format:
           name: Time Format
           description: "Choose how time should be displayed."
@@ -238,7 +245,12 @@ blueprint:
                   value: '%-H:%M'
                 - label: 'H:MM AM/PM (ex. 8:30AM and 8:30PM)'
                   value: '%-I:%M %p'
-
+        time_color:
+          name: "Time Display Color"
+          description: "Color for this segment's text."
+          default: [145, 145, 10]
+          selector:
+            color_rgb: {}
   
   
     # matrix_ip:
@@ -446,10 +458,12 @@ action:
       #
       date_format_choice: !input date_format
       date_value: "{{ now().strftime(date_format_choice) }}"
+      date_col: !input date_color
       #date_value: "{{ now().strftime('%d/%m') }}"
       
       time_format_choice: !input time_format
       time_value: "{{ now().strftime(time_format_choice) }}"
+      time_col: !input time_color
       #time_value: "{{ now().strftime('%H:%M') }}"
 
       # Color variables
@@ -461,7 +475,10 @@ action:
       color_on_str: "{{ color_on|join(',') }}"
       color_off_str: "{{ color_off|join(',') }}"
       color_other_str: "{{ color_other|join(',') }}"
-
+      sensor_1_col_str: "{{ sensor_1_col|join(',') }}"
+      sensor_2_col_str: "{{ sensor_2_col|join(',') }}"
+      date_col_str: "{{ date_col|join(',') }}"
+      time_col_str: "{{ time_col|join(',') }}"
 
       # Reference all input entities first
       top_entity: !input top_row
@@ -469,6 +486,9 @@ action:
       bottom_entity: !input bottom_row
       left_entity: !input left_row
 
+
+
+  
       # Top Row
       top_row_color: >-
         {% set s = states(top_entity) %}
@@ -631,10 +651,10 @@ action:
     data:
       url: "{{ matrix_url_value }}"
       payload: '{"seg": [
-        { "n": "{{sensor_1_value}}" },
-        { "n": "{{sensor_2_value}}" },
-        { "n": "{{time_value}}" },
-        { "n": "{{date_value}}" },
+        { "n": "{{sensor_1_value}}", "col": [[{{sensor_1_col_str}}]] },
+        { "n": "{{sensor_2_value}}", "col": [[{{sensor_2_col_str}}]] },
+        { "n": "{{time_value}}", "col": [[{{time_col_str}}]] },
+        { "n": "{{date_value}}", "col": [[{{date_col_str}}]] },
         {},
         {"col":[[{{top_row_color}}]]},
         {"col":[[{{right_row_color}}]]},
@@ -643,6 +663,9 @@ action:
         ]
         }'
 
+#          "n": "{{sensor_1_value}}",
+#          "col": [{{sensor_1_col_str}}]
+          
 #   - service: !input service_1
 #     data:
 #       text1: "{{ sensor_1_value }}"
