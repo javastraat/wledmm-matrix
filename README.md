@@ -33,7 +33,7 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
   The display will now show:
   - [Color Rings] Four edge indicators showing device states
   - [Top] Your sensor values (e.g., 23°C | 45% humidity)
-  - [Center] Animation of Photo :) 
+  - [Center] Animation or Photo :) 
   - [Bottom] Current time (14:30) and date (28/06)
 
 🔧 Pro Tips:
