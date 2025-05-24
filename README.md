@@ -22,16 +22,17 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
         method: POST
         payload: '{{ payload }}'
     ```
-    2️⃣ Add Blueprint
-    
+
+2️⃣ Add Blueprint
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fjavastraat%2Fwledmm-matrix%2Fblob%2Fmain%2Fwledmm_matrix.yaml)
-2️⃣ Configure Your Automation
+
+3️⃣ Configure Your Automation
   - IP of Matrix: Enter your P2 LED panel's IP (e.g., 192.168.2.231).
   - Main Sensors: Pick any sensor (e.g., sensor.buienradar_temperature for Segment 1).
   - Status Rings: Assign binary sensors to four directional indicators (top/right/bottom/left).
   - Custom Colors: Set colors for ON, OFF, and other states.
 
-3️⃣ Watch It Shine! 🌈
+4️⃣ Watch It Shine! 🌈
   The display will now show:
   - [Color Rings] Four edge indicators showing device states
   - [Top] Your sensor values (e.g., 23°C | 45% humidity)
