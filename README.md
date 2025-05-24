@@ -13,7 +13,9 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
     - 🔵 Blue for other/unknown states
 
 ⚙️ Setup Guide
-  1️⃣ Add to configuration.yaml (Required once)
+First you need to setup you display with WLEDMM and load the config and preset json. Additional you can add the pixart.htm
+If you got the display from us as a gift, wledmm is preloaded otherwise i will be standard with clockwise
+1️⃣ Add to configuration.yaml (Required once)
 
     ```yaml
     rest_command:
