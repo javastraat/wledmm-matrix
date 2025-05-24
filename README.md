@@ -41,6 +41,7 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
   - Use darker RGB values (0,145,0) for better LED visibility.
   - Top position is ideal for most important status alerts.
   - Use PixArt to send Images to Segment 4 https://kno.wled.ge/features/pixel-art-converter/
+  - After download/copy open the pixart.htm file local or on http://IP/pixart.htm  
 
 🖥️ Visual Layout:
                      [🟢TOP]    
