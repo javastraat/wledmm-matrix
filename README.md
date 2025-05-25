@@ -16,7 +16,8 @@ Transform your P2 LED matrix into a sleek, real-time dashboard—showcasing sens
 Setup Guide
 
 First you need to flash and setup your display with WLEDMM then load the config and preset json. Additional you can add the pixart.htm
-If you got the display from us as a gift, wledmm is preloaded otherwise it will be standard with clockwise
+
+If you got the display from us as a gift, wledmm is preloaded otherwise it will be mostly with clockwise
 
 1️⃣ Add to configuration.yaml (Required once)
 
